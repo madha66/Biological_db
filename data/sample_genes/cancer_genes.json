@@ -1,0 +1,6 @@
+{
+  "name": "Cancer-related genes",
+  "description": "A set of well-known tumor suppressor genes and oncogenes frequently studied in cancer biology.",
+  "organism": "hsa",
+  "genes": ["TP53", "BRCA1", "EGFR", "AKT1", "PTEN", "MYC"]
+}

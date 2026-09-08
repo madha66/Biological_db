@@ -1,0 +1,6 @@
+{
+  "name": "Mixed valid and invalid genes (for testing partial failure)",
+  "description": "This set intentionally includes two invalid gene identifiers (FAKEGENE1, NOTREAL99) to demonstrate that the system gracefully handles partial mapping failures and proceeds with valid genes.",
+  "organism": "hsa",
+  "genes": ["TP53", "BRCA1", "FAKEGENE1", "EGFR", "NOTREAL99", "PTEN"]
+}

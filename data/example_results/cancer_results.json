@@ -1,0 +1,117 @@
+{
+  "summary": {
+    "organism": "hsa",
+    "total_submitted_genes": 6,
+    "valid_genes_count": 6,
+    "unmapped_genes_count": 0,
+    "unmapped_genes": [],
+    "total_pathways_found": 18,
+    "significant_pathways_count": 8
+  },
+  "pathways": [
+    {
+      "rank": 1,
+      "pathway_id": "hsa05200",
+      "pathway_name": "Pathways in cancer",
+      "pathway_score": 0.8333,
+      "raw_p_value": 0.0000014,
+      "adjusted_p_value": 0.000025,
+      "ranking_score": 3.834,
+      "is_significant": true,
+      "input_genes_in_pathway": ["TP53", "EGFR", "AKT1", "PTEN", "MYC"],
+      "input_genes_count": 5,
+      "total_pathway_genes_count": 530
+    },
+    {
+      "rank": 2,
+      "pathway_id": "hsa04151",
+      "pathway_name": "PI3K-Akt signaling pathway",
+      "pathway_score": 0.6667,
+      "raw_p_value": 0.000012,
+      "adjusted_p_value": 0.000108,
+      "ranking_score": 2.645,
+      "is_significant": true,
+      "input_genes_in_pathway": ["EGFR", "AKT1", "PTEN", "MYC"],
+      "input_genes_count": 4,
+      "total_pathway_genes_count": 354
+    },
+    {
+      "rank": 3,
+      "pathway_id": "hsa04115",
+      "pathway_name": "p53 signaling pathway",
+      "pathway_score": 0.5000,
+      "raw_p_value": 0.000045,
+      "adjusted_p_value": 0.000270,
+      "ranking_score": 1.784,
+      "is_significant": true,
+      "input_genes_in_pathway": ["TP53", "PTEN", "MYC"],
+      "input_genes_count": 3,
+      "total_pathway_genes_count": 72
+    },
+    {
+      "rank": 4,
+      "pathway_id": "hsa05210",
+      "pathway_name": "Colorectal cancer",
+      "pathway_score": 0.5000,
+      "raw_p_value": 0.000098,
+      "adjusted_p_value": 0.000441,
+      "ranking_score": 1.678,
+      "is_significant": true,
+      "input_genes_in_pathway": ["TP53", "AKT1", "MYC"],
+      "input_genes_count": 3,
+      "total_pathway_genes_count": 86
+    },
+    {
+      "rank": 5,
+      "pathway_id": "hsa05212",
+      "pathway_name": "Pancreatic cancer",
+      "pathway_score": 0.5000,
+      "raw_p_value": 0.000125,
+      "adjusted_p_value": 0.000450,
+      "ranking_score": 1.673,
+      "is_significant": true,
+      "input_genes_in_pathway": ["TP53", "EGFR", "AKT1"],
+      "input_genes_count": 3,
+      "total_pathway_genes_count": 75
+    },
+    {
+      "rank": 6,
+      "pathway_id": "hsa05224",
+      "pathway_name": "Breast cancer",
+      "pathway_score": 0.5000,
+      "raw_p_value": 0.000210,
+      "adjusted_p_value": 0.000630,
+      "ranking_score": 1.600,
+      "is_significant": true,
+      "input_genes_in_pathway": ["TP53", "BRCA1", "EGFR"],
+      "input_genes_count": 3,
+      "total_pathway_genes_count": 147
+    },
+    {
+      "rank": 7,
+      "pathway_id": "hsa04012",
+      "pathway_name": "ErbB signaling pathway",
+      "pathway_score": 0.3333,
+      "raw_p_value": 0.0021,
+      "adjusted_p_value": 0.0054,
+      "ranking_score": 0.756,
+      "is_significant": true,
+      "input_genes_in_pathway": ["EGFR", "AKT1"],
+      "input_genes_count": 2,
+      "total_pathway_genes_count": 85
+    },
+    {
+      "rank": 8,
+      "pathway_id": "hsa04066",
+      "pathway_name": "HIF-1 signaling pathway",
+      "pathway_score": 0.3333,
+      "raw_p_value": 0.0035,
+      "adjusted_p_value": 0.0078,
+      "ranking_score": 0.703,
+      "is_significant": true,
+      "input_genes_in_pathway": ["EGFR", "AKT1"],
+      "input_genes_count": 2,
+      "total_pathway_genes_count": 108
+    }
+  ]
+}

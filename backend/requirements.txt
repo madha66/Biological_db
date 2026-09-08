@@ -1,0 +1,31 @@
+# KEGGPathRank Backend Dependencies
+# Python 3.11+ required
+
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# Data validation
+pydantic==2.10.4
+
+# HTTP client for KEGG API
+requests==2.32.3
+
+# Data handling
+pandas==2.2.3
+numpy==2.2.1
+
+# Statistical analysis
+scipy==1.15.0
+statsmodels==0.14.4
+
+# Visualization (for static chart generation)
+matplotlib==3.10.0
+
+# Development/Testing
+pytest==8.3.4
+pytest-asyncio==0.25.0
+httpx==0.28.1
+
+# Environment variable loading
+python-dotenv==1.0.1
