@@ -1,1 +1,0 @@
-# KEGGPathRank Backend Application

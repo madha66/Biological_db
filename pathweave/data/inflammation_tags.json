@@ -1,0 +1,85 @@
+{
+  "infection": {
+    "label": "Infection",
+    "color": "#F97316",
+    "pathway_ids": [
+      "hsa04620", "hsa04621", "hsa04622", "hsa04623", "hsa04624",
+      "hsa04625", "hsa04640", "hsa04610", "hsa04611", "hsa04612",
+      "hsa04613", "hsa05130", "hsa05131", "hsa05132", "hsa05133",
+      "hsa05134", "hsa05150", "hsa05152", "hsa05160", "hsa05161",
+      "hsa05162", "hsa05163", "hsa05164", "hsa05165", "hsa05166",
+      "hsa05167", "hsa05168", "hsa05169", "hsa05170", "hsa05171"
+    ],
+    "keywords": [
+      "toll-like receptor", "innate immune", "pathogen", "bacterial",
+      "viral", "fungal", "nod-like receptor", "rig-i", "complement",
+      "neutrophil", "phagocytosis", "sepsis", "influenza", "hepatitis",
+      "covid", "tuberculosis", "malaria"
+    ]
+  },
+  "autoimmunity": {
+    "label": "Autoimmunity",
+    "color": "#8B5CF6",
+    "pathway_ids": [
+      "hsa05310", "hsa05320", "hsa05321", "hsa05322", "hsa05323",
+      "hsa05330", "hsa05332", "hsa04940", "hsa05340", "hsa04060"
+    ],
+    "keywords": [
+      "rheumatoid", "lupus", "multiple sclerosis", "autoimmune",
+      "type i diabetes", "inflammatory bowel", "crohn", "psoriasis",
+      "ankylosing spondylitis", "t cell receptor", "b cell receptor",
+      "allograft", "graft-versus-host", "th1", "th2", "th17",
+      "regulatory t"
+    ]
+  },
+  "metabolic": {
+    "label": "Metabolic Stress",
+    "color": "#10B981",
+    "pathway_ids": [
+      "hsa04931", "hsa04932", "hsa04933", "hsa04940", "hsa03320",
+      "hsa04910", "hsa04920", "hsa04922", "hsa04923", "hsa04924",
+      "hsa04925", "hsa04926", "hsa04927", "hsa04950", "hsa01212"
+    ],
+    "keywords": [
+      "insulin", "adipokine", "adipogenesis", "obesity", "diabetes",
+      "fatty acid", "lipid", "cholesterol", "metabolic syndrome",
+      "non-alcoholic", "steatohepatitis", "mtor", "ampk",
+      "thermogenesis", "glucagon", "oxidative phosphorylation"
+    ]
+  },
+  "cancer": {
+    "label": "Cancer-Associated",
+    "color": "#EF4444",
+    "pathway_ids": [
+      "hsa05200", "hsa05205", "hsa05206", "hsa05210", "hsa05211",
+      "hsa05212", "hsa05213", "hsa05214", "hsa05215", "hsa05216",
+      "hsa05217", "hsa05218", "hsa05219", "hsa05220", "hsa05221",
+      "hsa05222", "hsa05223", "hsa05224", "hsa05225", "hsa05226",
+      "hsa05230", "hsa05231", "hsa05235"
+    ],
+    "keywords": [
+      "cancer", "carcinoma", "tumor", "oncogenesis", "neoplasm",
+      "melanoma", "glioma", "leukemia", "lymphoma", "sarcoma",
+      "colorectal", "prostate", "breast", "lung", "pancreatic",
+      "p53", "rb", "apoptosis evasion", "angiogenesis", "metastasis",
+      "epithelial-mesenchymal"
+    ]
+  },
+  "tissue_damage": {
+    "label": "Tissue Damage",
+    "color": "#F59E0B",
+    "pathway_ids": [
+      "hsa04010", "hsa04012", "hsa04014", "hsa04015", "hsa04020",
+      "hsa04022", "hsa04024", "hsa04110", "hsa04115", "hsa04210",
+      "hsa04215", "hsa04216", "hsa04217", "hsa04370", "hsa04380",
+      "hsa04510", "hsa04512", "hsa04514"
+    ],
+    "keywords": [
+      "apoptosis", "necrosis", "necroptosis", "ferroptosis", "autophagy",
+      "fibrosis", "wound healing", "tissue repair", "extracellular matrix",
+      "hypoxia", "oxidative stress", "ros", "ischemia", "reperfusion",
+      "mapk", "erk", "vegf", "angiogenesis", "mmp", "collagen",
+      "tgf-beta", "wnt signaling", "notch", "hedgehog"
+    ]
+  }
+}
