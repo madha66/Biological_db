@@ -2,6 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { DiseaseAnalysisResult } from '@/types/api';
+import { DiseaseNetworkView } from '@/components/results/DiseaseNetworkView';
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -57,6 +58,14 @@ export function DiseaseResultsPage() {
           {result.warnings.map((warning) => <p key={warning}>{warning}</p>)}
         </div>
       )}
+      <Section title="Input resolution">
+        <div className="overflow-x-auto"><table className="w-full text-sm">
+          <thead><tr className="text-left text-slate-500 border-b border-border-subtle"><th className="py-2">Input</th><th>Type</th><th>Resolved identifier</th><th>Status</th><th>Source</th></tr></thead>
+          <tbody>{result.input_resolutions.map((item) => (
+            <tr key={item.original_input} className="border-b border-border-subtle/50 text-slate-300"><td className="py-2 font-mono">{item.original_input}</td><td>{item.detected_type}</td><td className="font-mono">{item.resolved_identifier || '—'}</td><td>{item.status}{item.warning ? `: ${item.warning}` : ''}</td><td>{item.source_db || '—'}</td></tr>
+          ))}</tbody>
+        </table></div>
+      </Section>
       <Section title="Disease associations">
         <div className="overflow-x-auto"><table className="w-full text-sm">
           <thead><tr className="text-left text-slate-500 border-b border-border-subtle">
@@ -103,6 +112,38 @@ export function DiseaseResultsPage() {
             <tr key={item.theme} className="border-b border-border-subtle/50 text-slate-300"><td className="py-2">{item.theme}</td><td>{item.kegg_pathways.length ? '✓' : '—'}</td><td>{item.reactome_pathways.length ? '✓' : '—'}</td><td>{item.go_terms.length ? '✓' : '—'}</td><td className="font-mono">{item.supporting_inputs.join(', ')}</td></tr>
           ))}</tbody>
         </table>{result.cross_validation.length === 0 && <p className="text-slate-500">No exact normalized names were shared across databases.</p>}</div>
+      </Section>
+      <Section title="miRNA target relationships">
+        <div className="overflow-x-auto"><table className="w-full text-sm">
+          <thead><tr className="text-left text-slate-500 border-b border-border-subtle"><th className="py-2">miRNA</th><th>Target gene</th><th>Evidence</th><th>Source</th></tr></thead>
+          <tbody>{result.mirna_relationships.map((item) => (
+            <tr key={`${item.rna}-${item.target_gene}`} className="border-b border-border-subtle/50 text-slate-300"><td className="py-2 font-mono">{item.rna}</td><td className="font-mono">{item.target_gene}</td><td>{item.evidence || item.evidence_category || '—'}</td><td>{item.source_db}</td></tr>
+          ))}</tbody>
+        </table>{result.mirna_relationships.length === 0 && <p className="text-slate-500">No curated miRNA target relationships were returned.</p>}</div>
+      </Section>
+      <Section title="lncRNA relationships">
+        <div className="overflow-x-auto"><table className="w-full text-sm">
+          <thead><tr className="text-left text-slate-500 border-b border-border-subtle"><th className="py-2">lncRNA</th><th>Targets</th><th>Status</th><th>Source</th></tr></thead>
+          <tbody>{result.lncrna_relationships.map((item) => (
+            <tr key={item.lncrna} className="border-b border-border-subtle/50 text-slate-300"><td className="py-2 font-mono">{item.lncrna}</td><td>{item.target_genes.join(', ') || 'None returned'}</td><td>{item.status}</td><td>{item.source_db}</td></tr>
+          ))}</tbody>
+        </table>{result.lncrna_relationships.length === 0 && <p className="text-slate-500">No lncRNA relationships were returned.</p>}</div>
+      </Section>
+      <Section title="Protein interactions">
+        <div className="overflow-x-auto"><table className="w-full text-sm">
+          <thead><tr className="text-left text-slate-500 border-b border-border-subtle"><th className="py-2">Source</th><th>Target</th><th>Score</th><th>Source</th></tr></thead>
+          <tbody>{result.protein_interactions.slice(0, 100).map((item) => (
+            <tr key={`${item.source_gene}-${item.target_gene}`} className="border-b border-border-subtle/50 text-slate-300"><td className="py-2 font-mono">{item.source_gene}</td><td className="font-mono">{item.target_gene}</td><td>{item.score == null ? '—' : item.score.toFixed(3)}</td><td>{item.source_db}</td></tr>
+          ))}</tbody>
+        </table>{result.protein_interactions.length === 0 && <p className="text-slate-500">No protein interactions were returned.</p>}</div>
+      </Section>
+      <Section title="Integrated network">
+        <p className="text-sm text-slate-300">{result.network.nodes.length} nodes and {result.network.edges.length} deduplicated edges.</p>
+        <div className="mt-3 flex flex-wrap gap-2">{Object.entries(result.network.nodes.reduce<Record<string, number>>((counts, node) => { counts[node.node_type] = (counts[node.node_type] || 0) + 1; return counts; }, {})).map(([type, count]) => <span key={type} className="px-2 py-1 rounded bg-bg-tertiary text-xs text-slate-300">{type}: {count}</span>)}</div>
+        <div className="mt-4"><DiseaseNetworkView network={result.network} /></div>
+      </Section>
+      <Section title="Network clusters">
+        <div className="space-y-3">{result.network_clusters.map((cluster) => <div key={cluster.cluster_id} className="rounded-lg border border-border-subtle p-3"><p className="text-sm font-semibold text-white">{cluster.cluster_id} <span className="text-slate-500 font-normal">({cluster.node_count} nodes)</span></p><p className="text-xs text-slate-400 mt-1">Members: {cluster.members.join(', ')}</p><p className="text-xs text-slate-400 mt-1">Pathways: {cluster.associated_pathways.join(', ') || 'None'}</p></div>)}</div>
       </Section>
       <Section title="Transcript information">
         <div className="overflow-x-auto"><table className="w-full text-sm">

@@ -22,11 +22,23 @@ from app.api.models import (
     ReactomePathway,
     TranscriptInfo,
 )
+from app.interactions.string_client import fetch_protein_interactions
 from app.kegg.client import (
     KEGG_BASE,
     _polite_get,
     fetch_gene_pathways,
     resolve_gene_identifiers,
+)
+from app.network.analysis import (
+    build_integrated_network,
+    cluster_network,
+    shared_unique_associations,
+)
+from app.rna.services import (
+    build_input_resolutions,
+    detect_rna_type,
+    fetch_lncrna_relationships,
+    fetch_mirna_relationships,
 )
 
 logger = logging.getLogger(__name__)
@@ -315,13 +327,24 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
     if not inputs:
         raise ValueError("At least one input molecule is required.")
     warnings: List[str] = []
-    gene_inputs = inputs if request.input_type in {"gene", "mixed"} else []
-    if request.input_type == "miRNA":
-        warnings.append("miRTarBase/miR2Disease are not queried in this deployment; no miRNA associations were inferred.")
-    elif request.input_type == "lncRNA":
-        warnings.append("LncRNA disease resources are not queried in this deployment; no lncRNA associations were inferred.")
-    elif request.input_type == "mixed":
-        warnings.append("Only gene symbols in a mixed submission can be mapped through KEGG and Ensembl.")
+    detected_types = {
+        value: detect_rna_type(value, request.input_type)
+        for value in inputs
+    }
+    gene_inputs = [
+        value for value in inputs
+        if detected_types[value] == "gene"
+    ]
+    mirna_inputs = [
+        value for value in inputs
+        if detected_types[value] == "miRNA"
+    ]
+    lncrna_inputs = [
+        value for value in inputs
+        if detected_types[value] == "lncRNA"
+    ]
+    if mirna_inputs and request.organism.value != "hsa":
+        warnings.append("miRNA relationship lookup currently supports human identifiers only.")
     async with httpx.AsyncClient() as client:
         resolved_gene_ids, resolution_warnings = await resolve_gene_identifiers(
             gene_inputs, request.organism.value, client
@@ -349,6 +372,18 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
             warnings.extend(go_warnings)
         elif gene_inputs:
             warnings.append("Reactome and Gene Ontology cross-validation currently supports human genes only.")
+        mirna_relationships, mirna_warnings = await fetch_mirna_relationships(
+            mirna_inputs, client
+        )
+        lncrna_relationships, lncrna_warnings = await fetch_lncrna_relationships(
+            lncrna_inputs, client
+        )
+        protein_interactions, interaction_warnings = await fetch_protein_interactions(
+            gene_inputs, client, request.interaction_score
+        )
+        warnings.extend(mirna_warnings)
+        warnings.extend(lncrna_warnings)
+        warnings.extend(interaction_warnings)
         gene_pathways = await fetch_gene_pathways(
             list(resolved_gene_ids.values()), request.organism.value, client
         )
@@ -376,22 +411,39 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
     ]
     cross_validation = _cross_validate(pathways, reactome_pathways, go_annotations)
 
-    edges: List[DiseaseNetworkEdge] = []
-    for association in associations:
-        edges.append(DiseaseNetworkEdge(
-            source=association.input_name,
-            target=association.disease_id,
-            edge_type="GENE_ASSOCIATED_WITH_DISEASE",
-            source_db=association.source_db,
-        ))
-    for pathway in pathways:
-        for gene in pathway.input_genes:
-            edges.append(DiseaseNetworkEdge(
-                source=gene,
-                target=pathway.pathway_id,
-                edge_type="GENE_PART_OF_PATHWAY",
-                source_db=pathway.source_db,
-            ))
+    input_resolutions = build_input_resolutions(
+        inputs, request.input_type, resolved_gene_ids
+    )
+    input_types = {
+        item.normalized_identifier: item.detected_type
+        for item in input_resolutions
+    }
+    input_types.update({
+        item.original_input: item.detected_type
+        for item in input_resolutions
+    })
+    network = build_integrated_network(
+        inputs,
+        input_types,
+        associations,
+        pathways,
+        mirna_relationships,
+        lncrna_relationships,
+        protein_interactions,
+    )
+    network_clusters = cluster_network(network, associations, pathways)
+
+    edges = [
+        DiseaseNetworkEdge(
+            source=edge.source,
+            target=edge.target,
+            edge_type=edge.edge_type,
+            source_db=edge.source_db,
+            evidence=edge.evidence,
+            score=edge.score,
+        )
+        for edge in network.edges
+    ]
 
     diseases_by_input: Dict[str, Set[str]] = defaultdict(set)
     pathways_by_input: Dict[str, Set[str]] = defaultdict(set)
@@ -400,16 +452,35 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
     for pathway in pathways:
         for gene in pathway.input_genes:
             pathways_by_input[gene].add(pathway.pathway_name)
-    shared_diseases = sorted(set.intersection(*diseases_by_input.values())) if diseases_by_input and len(inputs) > 1 else []
-    shared_pathways = sorted(set.intersection(*pathways_by_input.values())) if pathways_by_input and len(inputs) > 1 else []
-    unique_diseases = {gene: sorted(values - set(shared_diseases)) for gene, values in diseases_by_input.items()}
-    unique_pathways = {gene: sorted(values - set(shared_pathways)) for gene, values in pathways_by_input.items()}
-    clusters = [DiseaseCluster(
-        cluster_id="cluster-1",
-        members=inputs,
-        shared_diseases=shared_diseases,
-        shared_pathways=shared_pathways,
-    )] if inputs else []
+    shared_disease_models, unique_diseases = shared_unique_associations(diseases_by_input)
+    shared_pathway_models, unique_pathways = shared_unique_associations(pathways_by_input)
+    shared_diseases = [
+        item.association for item in shared_disease_models
+        if item.scope == "all inputs"
+    ]
+    shared_pathways = [
+        item.association for item in shared_pathway_models
+        if item.scope == "all inputs"
+    ]
+    shared_associations = shared_disease_models + shared_pathway_models
+    clusters = [
+        DiseaseCluster(
+            cluster_id=cluster.cluster_id,
+            members=cluster.members,
+            shared_diseases=[
+                value for value in cluster.associated_diseases
+                if value in shared_diseases
+            ],
+            shared_pathways=[
+                value for value in cluster.associated_pathways
+                if value in shared_pathways
+            ],
+            node_count=cluster.node_count,
+            node_types=cluster.node_types,
+            major_genes=cluster.major_genes,
+        )
+        for cluster in network_clusters
+    ]
 
     return DiseaseAnalysisResult(
         inputs=inputs,
@@ -417,6 +488,7 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
         disease_query=request.disease_query,
         organism=request.organism.value,
         resolved_gene_ids=resolved_gene_ids,
+        input_resolutions=input_resolutions,
         summary=DiseaseAnalysisSummary(
             input_count=len(inputs),
             disease_association_count=len(associations),
@@ -428,6 +500,16 @@ async def build_disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnal
         reactome_pathways=reactome_pathways,
         go_annotations=go_annotations,
         cross_validation=cross_validation,
+        mirna_relationships=mirna_relationships,
+        lncrna_relationships=lncrna_relationships,
+        protein_interactions=protein_interactions,
+        network=network,
+        network_clusters=network_clusters,
+        shared_associations=shared_associations,
+        unique_associations={
+            **{f"diseases:{key}": value for key, value in unique_diseases.items()},
+            **{f"pathways:{key}": value for key, value in unique_pathways.items()},
+        },
         transcripts=transcripts,
         network_edges=edges,
         clusters=clusters,

@@ -27,6 +27,7 @@ export interface DiseaseAnalysisRequest {
   input_type: 'gene' | 'miRNA' | 'lncRNA' | 'mixed';
   disease_query?: string;
   organism: 'hsa' | 'mmu' | 'rno';
+  interaction_score?: number;
 }
 
 export interface DiseaseAssociation {
@@ -56,6 +57,81 @@ export interface DiseasePathway {
   input_genes: string[];
   overlap_count: number;
   coverage: number | null;
+}
+
+export interface InputResolution {
+  original_input: string;
+  normalized_identifier: string;
+  detected_type: string;
+  resolved_identifier: string | null;
+  source_db: string | null;
+  confidence: number | null;
+  status: string;
+  warning: string | null;
+}
+
+export interface RNAInteraction {
+  rna: string;
+  target_gene: string;
+  target_identifier: string | null;
+  source_db: string;
+  evidence: string | null;
+  evidence_category: string | null;
+}
+
+export interface LncRNAAssociation {
+  lncrna: string;
+  target_genes: string[];
+  diseases: string[];
+  source_db: string;
+  evidence: string | null;
+  status: string;
+}
+
+export interface ProteinInteraction {
+  source_gene: string;
+  target_gene: string;
+  source_db: string;
+  score: number | null;
+  interaction_type: string | null;
+}
+
+export interface NetworkNode {
+  id: string;
+  label: string;
+  node_type: string;
+}
+
+export interface NetworkEdge {
+  source: string;
+  target: string;
+  edge_type: string;
+  source_db: string;
+  evidence: string | null;
+  score: number | null;
+}
+
+export interface IntegratedNetwork {
+  nodes: NetworkNode[];
+  edges: NetworkEdge[];
+}
+
+export interface NetworkCluster {
+  cluster_id: string;
+  members: string[];
+  node_count: number;
+  node_types: Record<string, number>;
+  major_genes: string[];
+  associated_diseases: string[];
+  associated_pathways: string[];
+  shared_associations: string[];
+  unique_associations: string[];
+}
+
+export interface SharedAssociation {
+  association: string;
+  supporting_inputs: string[];
+  scope: string;
 }
 
 export interface ReactomePathway {
@@ -103,6 +179,7 @@ export interface DiseaseAnalysisResult {
   disease_query: string | null;
   organism: string;
   resolved_gene_ids: Record<string, string>;
+  input_resolutions: InputResolution[];
   summary: {
     input_count: number;
     disease_association_count: number;
@@ -114,6 +191,13 @@ export interface DiseaseAnalysisResult {
   reactome_pathways: ReactomePathway[];
   go_annotations: GOAnnotation[];
   cross_validation: CrossValidationTheme[];
+  mirna_relationships: RNAInteraction[];
+  lncrna_relationships: LncRNAAssociation[];
+  protein_interactions: ProteinInteraction[];
+  network: IntegratedNetwork;
+  network_clusters: NetworkCluster[];
+  shared_associations: SharedAssociation[];
+  unique_associations: Record<string, string[]>;
   transcripts: TranscriptInfo[];
   network_edges: DiseaseNetworkEdge[];
   clusters: DiseaseCluster[];

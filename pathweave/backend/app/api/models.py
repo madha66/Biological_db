@@ -52,6 +52,7 @@ class DiseaseAnalysisRequest(BaseModel):
     input_type: str = Field(default="gene", pattern="^(gene|miRNA|lncRNA|mixed)$")
     disease_query: Optional[str] = Field(default=None, max_length=120)
     organism: Organism = Organism.human
+    interaction_score: float = Field(default=0.4, ge=0, le=1)
 
 
 class DiseaseAssociation(BaseModel):
@@ -89,6 +90,81 @@ class DiseasePathway(BaseModel):
     coverage: Optional[float] = None
 
 
+class InputResolution(BaseModel):
+    original_input: str
+    normalized_identifier: str
+    detected_type: str
+    resolved_identifier: Optional[str] = None
+    source_db: Optional[str] = None
+    confidence: Optional[float] = None
+    status: str
+    warning: Optional[str] = None
+
+
+class RNAInteraction(BaseModel):
+    rna: str
+    target_gene: str
+    target_identifier: Optional[str] = None
+    source_db: str
+    evidence: Optional[str] = None
+    evidence_category: Optional[str] = None
+
+
+class LncRNAAssociation(BaseModel):
+    lncrna: str
+    target_genes: List[str] = Field(default_factory=list)
+    diseases: List[str] = Field(default_factory=list)
+    source_db: str
+    evidence: Optional[str] = None
+    status: str = "no_result"
+
+
+class ProteinInteraction(BaseModel):
+    source_gene: str
+    target_gene: str
+    source_db: str
+    score: Optional[float] = None
+    interaction_type: Optional[str] = None
+
+
+class NetworkNode(BaseModel):
+    id: str
+    label: str
+    node_type: str
+
+
+class NetworkEdge(BaseModel):
+    source: str
+    target: str
+    edge_type: str
+    source_db: str
+    evidence: Optional[str] = None
+    score: Optional[float] = None
+
+
+class IntegratedNetwork(BaseModel):
+    nodes: List[NetworkNode] = Field(default_factory=list)
+    edges: List[NetworkEdge] = Field(default_factory=list)
+
+
+class NetworkCluster(BaseModel):
+    cluster_id: str
+    members: List[str]
+    node_count: int
+    node_types: Dict[str, int] = Field(default_factory=dict)
+    major_genes: List[str] = Field(default_factory=list)
+    associated_diseases: List[str] = Field(default_factory=list)
+    associated_pathways: List[str] = Field(default_factory=list)
+    shared_associations: List[str] = Field(default_factory=list)
+    unique_associations: List[str] = Field(default_factory=list)
+
+
+class SharedAssociation(BaseModel):
+    association: str
+    supporting_inputs: List[str]
+    scope: str
+
+
 class ReactomePathway(BaseModel):
     input_gene: str
     pathway_id: str
@@ -119,6 +195,8 @@ class DiseaseNetworkEdge(BaseModel):
     target: str
     edge_type: str
     source_db: str
+    evidence: Optional[str] = None
+    score: Optional[float] = None
 
 
 class DiseaseCluster(BaseModel):
@@ -126,6 +204,9 @@ class DiseaseCluster(BaseModel):
     members: List[str]
     shared_diseases: List[str]
     shared_pathways: List[str]
+    node_count: Optional[int] = None
+    node_types: Dict[str, int] = Field(default_factory=dict)
+    major_genes: List[str] = Field(default_factory=list)
 
 
 class DiseaseAnalysisSummary(BaseModel):
@@ -141,12 +222,20 @@ class DiseaseAnalysisResult(BaseModel):
     disease_query: Optional[str] = None
     organism: str
     resolved_gene_ids: Dict[str, str] = {}
+    input_resolutions: List[InputResolution] = Field(default_factory=list)
     summary: DiseaseAnalysisSummary
     associations: List[DiseaseAssociation]
     pathways: List[DiseasePathway]
     reactome_pathways: List[ReactomePathway] = []
     go_annotations: List[GOAnnotation] = []
     cross_validation: List[CrossValidationTheme] = []
+    mirna_relationships: List[RNAInteraction] = Field(default_factory=list)
+    lncrna_relationships: List[LncRNAAssociation] = Field(default_factory=list)
+    protein_interactions: List[ProteinInteraction] = Field(default_factory=list)
+    network: IntegratedNetwork = Field(default_factory=IntegratedNetwork)
+    network_clusters: List[NetworkCluster] = Field(default_factory=list)
+    shared_associations: List[SharedAssociation] = Field(default_factory=list)
+    unique_associations: Dict[str, List[str]] = Field(default_factory=dict)
     transcripts: List[TranscriptInfo]
     network_edges: List[DiseaseNetworkEdge]
     clusters: List[DiseaseCluster]
