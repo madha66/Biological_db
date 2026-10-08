@@ -5,6 +5,7 @@ import asyncio
 import logging
 import re
 import time
+from urllib.parse import quote
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -206,3 +207,64 @@ async def get_full_pathway_data(
 
 def get_background_size(org: str) -> int:
     return BACKGROUND_SIZES.get(org, 7500)
+
+
+async def fetch_gene_pathways(
+    gene_ids: List[str],
+    org: str,
+    client: httpx.AsyncClient,
+) -> Dict[str, List[str]]:
+    """Return KEGG pathway IDs for numeric organism gene identifiers."""
+    result: Dict[str, List[str]] = {}
+    for gene_id in gene_ids:
+        db_entry = gene_id if ":" in gene_id else f"{org}:{gene_id}"
+        raw = await _polite_get(f"{KEGG_BASE}/link/pathway/{db_entry}", client)
+        if not raw:
+            continue
+        for line in raw.splitlines():
+            parts = line.split("\t")
+            if len(parts) == 2:
+                pathway_id = parts[1].replace("path:", "").strip()
+                result.setdefault(gene_id, []).append(pathway_id)
+    return result
+
+
+def parse_gene_identifier(raw: str, org: str, symbol: Optional[str] = None) -> Optional[str]:
+    """Extract the best matching KEGG organism entry from a /find/genes response."""
+    prefix = f"{org}:"
+    candidates: List[Tuple[str, str]] = []
+    for line in raw.splitlines():
+        parts = line.split("\t", 1)
+        entry = parts[0].strip()
+        if entry.startswith(prefix):
+            description = parts[1] if len(parts) == 2 else ""
+            candidates.append((entry, description))
+            if symbol and any(
+                alias.strip().casefold() == symbol.casefold()
+                for alias in description.split(";", 1)[0].split(",")
+            ):
+                return entry
+    if candidates:
+        return candidates[0][0]
+    return None
+
+
+async def resolve_gene_identifiers(
+    gene_symbols: List[str],
+    org: str,
+    client: httpx.AsyncClient,
+) -> Tuple[Dict[str, str], List[str]]:
+    """Resolve gene symbols to KEGG organism entries such as ``hsa:7157``."""
+    resolved: Dict[str, str] = {}
+    warnings: List[str] = []
+    for symbol in gene_symbols:
+        raw = await _polite_get(
+            f"{KEGG_BASE}/find/genes/{quote(symbol, safe='')}",
+            client,
+        )
+        entry = parse_gene_identifier(raw, org, symbol)
+        if entry is None:
+            warnings.append(f"KEGG could not resolve gene {symbol!r} for organism {org}.")
+        else:
+            resolved[symbol] = entry
+    return resolved, warnings

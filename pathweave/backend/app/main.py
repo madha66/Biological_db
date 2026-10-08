@@ -13,10 +13,14 @@ from fastapi.responses import StreamingResponse
 
 from app.api.models import (
     AnalyzeRequest,
+    DiseaseAnalysisRequest,
+    DiseaseAnalysisResult,
+    DiseaseSearchResult,
     GeneSuggestion,
     JobProgress,
     OrganismInfo,
 )
+from app.api.disease_analysis import build_disease_analysis
 from app.api.pipeline import get_job, start_analysis
 
 logging.basicConfig(level=logging.INFO)
@@ -89,6 +93,32 @@ async def analyze(request: AnalyzeRequest) -> dict:
     """Start an analysis job; returns a job id immediately."""
     job_id = await start_analysis(request)
     return {"job_id": job_id, "message": "Analysis started. Poll /api/jobs/{id} for progress."}
+
+
+@app.post("/api/disease-analysis", response_model=DiseaseAnalysisResult)
+async def disease_analysis(request: DiseaseAnalysisRequest) -> DiseaseAnalysisResult:
+    """Retrieve disease, pathway, and transcript associations from public sources."""
+    try:
+        return await build_disease_analysis(request)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/api/diseases/search", response_model=List[DiseaseSearchResult])
+async def search_diseases(q: str = Query(..., min_length=1, max_length=120)) -> List[DiseaseSearchResult]:
+    """Search the public KEGG Disease catalogue by name or identifier."""
+    import httpx
+    from app.api.disease_analysis import _parse_kegg_table
+    from app.kegg.client import KEGG_BASE, _polite_get
+
+    async with httpx.AsyncClient() as client:
+        diseases = _parse_kegg_table(await _polite_get(f"{KEGG_BASE}/list/disease", client))
+    query = q.lower().strip()
+    return [
+        DiseaseSearchResult(disease_id=disease_id, disease_name=name)
+        for disease_id, name in diseases.items()
+        if query in disease_id.lower() or query in name.lower()
+    ][:50]
 
 
 @app.get("/api/jobs/{job_id}", response_model=JobProgress)

@@ -47,6 +47,116 @@ class AnalyzeRequest(BaseModel):
     options: AnalysisOptions = Field(default_factory=AnalysisOptions)
 
 
+class DiseaseAnalysisRequest(BaseModel):
+    inputs: List[str] = Field(min_length=1, max_length=50)
+    input_type: str = Field(default="gene", pattern="^(gene|miRNA|lncRNA|mixed)$")
+    disease_query: Optional[str] = Field(default=None, max_length=120)
+    organism: Organism = Organism.human
+
+
+class DiseaseAssociation(BaseModel):
+    input_name: str
+    disease_id: str
+    disease_name: str
+    source_db: str
+    evidence: Optional[str] = None
+    score: Optional[float] = None
+
+
+class DiseaseSearchResult(BaseModel):
+    disease_id: str
+    disease_name: str
+    source_db: str = "KEGG Disease"
+
+
+class TranscriptInfo(BaseModel):
+    gene_symbol: str
+    gene_id: Optional[str] = None
+    transcript_id: str
+    transcript_name: Optional[str] = None
+    refseq_accession: Optional[str] = None
+    ensembl_transcript_id: Optional[str] = None
+    transcript_type: Optional[str] = None
+    source_db: str
+
+
+class DiseasePathway(BaseModel):
+    pathway_id: str
+    pathway_name: str
+    source_db: str
+    input_genes: List[str]
+    overlap_count: int
+    coverage: Optional[float] = None
+
+
+class ReactomePathway(BaseModel):
+    input_gene: str
+    pathway_id: str
+    pathway_name: str
+    source_db: str = "Reactome"
+    evidence: Optional[str] = None
+
+
+class GOAnnotation(BaseModel):
+    input_gene: str
+    go_id: str
+    term_name: str
+    namespace: str
+    source_db: str = "Gene Ontology"
+
+
+class CrossValidationTheme(BaseModel):
+    theme: str
+    kegg_pathways: List[str] = []
+    reactome_pathways: List[str] = []
+    go_terms: List[str] = []
+    supporting_inputs: List[str] = []
+    match_method: str
+
+
+class DiseaseNetworkEdge(BaseModel):
+    source: str
+    target: str
+    edge_type: str
+    source_db: str
+
+
+class DiseaseCluster(BaseModel):
+    cluster_id: str
+    members: List[str]
+    shared_diseases: List[str]
+    shared_pathways: List[str]
+
+
+class DiseaseAnalysisSummary(BaseModel):
+    input_count: int
+    disease_association_count: int
+    pathway_count: int
+    interaction_count: int
+
+
+class DiseaseAnalysisResult(BaseModel):
+    inputs: List[str]
+    input_type: str
+    disease_query: Optional[str] = None
+    organism: str
+    resolved_gene_ids: Dict[str, str] = {}
+    summary: DiseaseAnalysisSummary
+    associations: List[DiseaseAssociation]
+    pathways: List[DiseasePathway]
+    reactome_pathways: List[ReactomePathway] = []
+    go_annotations: List[GOAnnotation] = []
+    cross_validation: List[CrossValidationTheme] = []
+    transcripts: List[TranscriptInfo]
+    network_edges: List[DiseaseNetworkEdge]
+    clusters: List[DiseaseCluster]
+    shared_diseases: List[str]
+    unique_diseases: Dict[str, List[str]]
+    shared_pathways: List[str]
+    unique_pathways: Dict[str, List[str]]
+    warnings: List[str] = []
+
+
 # ---------------------------------------------------------------------------
 # Response models
 # ---------------------------------------------------------------------------

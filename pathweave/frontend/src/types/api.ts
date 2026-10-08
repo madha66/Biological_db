@@ -22,6 +22,108 @@ export interface AnalyzeRequest {
   options: AnalysisOptions;
 }
 
+export interface DiseaseAnalysisRequest {
+  inputs: string[];
+  input_type: 'gene' | 'miRNA' | 'lncRNA' | 'mixed';
+  disease_query?: string;
+  organism: 'hsa' | 'mmu' | 'rno';
+}
+
+export interface DiseaseAssociation {
+  input_name: string;
+  disease_id: string;
+  disease_name: string;
+  source_db: string;
+  evidence: string | null;
+  score: number | null;
+}
+
+export interface TranscriptInfo {
+  gene_symbol: string;
+  gene_id: string | null;
+  transcript_id: string;
+  transcript_name: string | null;
+  refseq_accession: string | null;
+  ensembl_transcript_id: string | null;
+  transcript_type: string | null;
+  source_db: string;
+}
+
+export interface DiseasePathway {
+  pathway_id: string;
+  pathway_name: string;
+  source_db: string;
+  input_genes: string[];
+  overlap_count: number;
+  coverage: number | null;
+}
+
+export interface ReactomePathway {
+  input_gene: string;
+  pathway_id: string;
+  pathway_name: string;
+  source_db: string;
+  evidence: string | null;
+}
+
+export interface GOAnnotation {
+  input_gene: string;
+  go_id: string;
+  term_name: string;
+  namespace: string;
+  source_db: string;
+}
+
+export interface CrossValidationTheme {
+  theme: string;
+  kegg_pathways: string[];
+  reactome_pathways: string[];
+  go_terms: string[];
+  supporting_inputs: string[];
+  match_method: string;
+}
+
+export interface DiseaseNetworkEdge {
+  source: string;
+  target: string;
+  edge_type: string;
+  source_db: string;
+}
+
+export interface DiseaseCluster {
+  cluster_id: string;
+  members: string[];
+  shared_diseases: string[];
+  shared_pathways: string[];
+}
+
+export interface DiseaseAnalysisResult {
+  inputs: string[];
+  input_type: string;
+  disease_query: string | null;
+  organism: string;
+  resolved_gene_ids: Record<string, string>;
+  summary: {
+    input_count: number;
+    disease_association_count: number;
+    pathway_count: number;
+    interaction_count: number;
+  };
+  associations: DiseaseAssociation[];
+  pathways: DiseasePathway[];
+  reactome_pathways: ReactomePathway[];
+  go_annotations: GOAnnotation[];
+  cross_validation: CrossValidationTheme[];
+  transcripts: TranscriptInfo[];
+  network_edges: DiseaseNetworkEdge[];
+  clusters: DiseaseCluster[];
+  shared_diseases: string[];
+  unique_diseases: Record<string, string[]>;
+  shared_pathways: string[];
+  unique_pathways: Record<string, string[]>;
+  warnings: string[];
+}
+
 export interface PathwayResult {
   rank: number;
   pathway_id: string;

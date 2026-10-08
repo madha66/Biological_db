@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { api } from '@/api/client';
-import type { AnalyzeRequest, AnalysisOptions } from '@/types/api';
+import type { AnalyzeRequest, AnalysisOptions, DiseaseAnalysisRequest } from '@/types/api';
 import { DEFAULT_OPTIONS } from '@/types/api';
 
 const EXAMPLE_GENES = ['TNF', 'IL6', 'TP53', 'STAT3', 'NFKB1'];
@@ -162,6 +162,11 @@ export function AnalyzePage() {
   const [options, setOptions] = useState<AnalysisOptions>(DEFAULT_OPTIONS);
   const [jobId, setJobId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [analysisMode, setAnalysisMode] = useState<'gene' | 'disease'>('gene');
+  const [diseaseInputType, setDiseaseInputType] = useState<DiseaseAnalysisRequest['input_type']>('gene');
+  const [diseaseInputText, setDiseaseInputText] = useState('');
+  const [diseaseQuery, setDiseaseQuery] = useState('');
+  const [diseaseResult, setDiseaseResult] = useState<Awaited<ReturnType<typeof api.diseaseAnalysis>> | null>(null);
 
   // Poll job progress
   const { data: jobProgress } = useQuery({
@@ -223,6 +228,30 @@ export function AnalyzePage() {
       localStorage.setItem('pathweave_last_job', job_id);
     } catch (err: any) {
       toast.error(err.message || 'Failed to load demo');
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDiseaseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const inputs = diseaseInputText.split(/[\n,\s]+/).map((value) => value.trim()).filter(Boolean);
+    if (inputs.length === 0) {
+      toast.error('Please enter at least one gene or RNA.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const result = await api.diseaseAnalysis({
+        inputs,
+        input_type: diseaseInputType,
+        disease_query: diseaseQuery.trim() || undefined,
+        organism,
+      });
+      setDiseaseResult(result);
+      navigate('/disease-results', { state: { result } });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Disease analysis failed');
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -327,7 +356,31 @@ export function AnalyzePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex gap-2 mb-6 p-1 rounded-xl bg-bg-tertiary" role="tablist" aria-label="Analysis type">
+              <button type="button" onClick={() => setAnalysisMode('gene')} className={`flex-1 py-2 rounded-lg text-sm font-medium ${analysisMode === 'gene' ? 'bg-bg-card text-brand-teal' : 'text-slate-400'}`}>Gene / RNA network</button>
+              <button type="button" onClick={() => setAnalysisMode('disease')} className={`flex-1 py-2 rounded-lg text-sm font-medium ${analysisMode === 'disease' ? 'bg-bg-card text-brand-teal' : 'text-slate-400'}`}>Disease explorer</button>
+            </div>
+            {analysisMode === 'disease' && (
+              <form onSubmit={handleDiseaseSubmit} className="space-y-5 mb-6">
+                <div>
+                  <label className="text-sm font-medium text-slate-300" htmlFor="disease-input">Genes or RNA molecules</label>
+                  <textarea id="disease-input" className="input-field resize-none h-28 mt-2" placeholder="TP53, BRCA1, BRCA2" value={diseaseInputText} onChange={(e) => setDiseaseInputText(e.target.value)} />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="text-sm text-slate-300">Input type
+                    <select className="input-field mt-2" value={diseaseInputType} onChange={(e) => setDiseaseInputType(e.target.value as DiseaseAnalysisRequest['input_type'])}>
+                      <option value="gene">mRNA / Gene</option><option value="miRNA">miRNA</option><option value="lncRNA">lncRNA</option><option value="mixed">Mixed</option>
+                    </select>
+                  </label>
+                  <label className="text-sm text-slate-300">Disease filter
+                    <input className="input-field mt-2" placeholder="cancer, pneumonia..." value={diseaseQuery} onChange={(e) => setDiseaseQuery(e.target.value)} />
+                  </label>
+                </div>
+                <button type="submit" className="btn-primary w-full" disabled={isSubmitting}>{isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Beaker className="w-4 h-4" />} Analyze diseases and pathways</button>
+                {diseaseResult && <p className="text-xs text-slate-500">Loaded {diseaseResult.summary.disease_association_count} associations.</p>}
+              </form>
+            )}
+            <form onSubmit={handleSubmit} className={`space-y-6 ${analysisMode === 'disease' ? 'hidden' : ''}`}>
               {/* Gene input / gene list toggle */}
               <div>
                 <div className="flex items-center justify-between mb-2">

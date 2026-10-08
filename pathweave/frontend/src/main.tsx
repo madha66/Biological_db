@@ -9,6 +9,7 @@ import App from './App';
 import { AnalyzePage } from './pages/AnalyzePage';
 import { ResultsPage } from './pages/ResultsPage';
 import { AboutPage } from './pages/AboutPage';
+import { DiseaseResultsPage } from './pages/DiseaseResultsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<App />}>
             <Route index element={<AnalyzePage />} />
             <Route path="results/:jobId" element={<ResultsPage />} />
+            <Route path="disease-results" element={<DiseaseResultsPage />} />
             <Route path="about" element={<AboutPage />} />
           </Route>
         </Routes>

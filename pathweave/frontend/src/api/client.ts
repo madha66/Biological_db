@@ -2,6 +2,8 @@
 
 import type {
   AnalyzeRequest,
+  DiseaseAnalysisRequest,
+  DiseaseAnalysisResult,
   GeneSuggestion,
   JobProgress,
   OrganismInfo,
@@ -27,6 +29,12 @@ async function request<T>(
 export const api = {
   analyze: (body: AnalyzeRequest) =>
     request<{ job_id: string; message: string }>('/analyze', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+
+  diseaseAnalysis: (body: DiseaseAnalysisRequest) =>
+    request<DiseaseAnalysisResult>('/disease-analysis', {
       method: 'POST',
       body: JSON.stringify(body),
     }),
