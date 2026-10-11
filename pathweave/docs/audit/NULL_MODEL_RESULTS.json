@@ -1,0 +1,17 @@
+{
+  "observed_top_pathway_score": 0.8492,
+  "mean_null_score": 0.9271,
+  "std_null_score": 0.1148,
+  "median_null_score": 0.9538,
+  "min_null_score": 0.0,
+  "max_null_score": 1.0,
+  "n_iterations": 200,
+  "empirical_pvalue": 0.89,
+  "standard_empirical_pvalue_plus_one": 0.890547,
+  "percentile": 11.0,
+  "random_number_generator": "random.Random(42)",
+  "sampling_method": "sample without replacement (k=len(seed_genes)=5)",
+  "gene_universe_size": 37,
+  "gene_weighting_assigned": "Uniform 1.0 (does not simulate RNA network expansion or evidence weights)",
+  "comparability_limitation": "Observed top score is computed from a 23-gene RNA-expanded neighborhood with weighted edges, while null iterations sample only 5 random genes with uniform weight 1.0."
+}

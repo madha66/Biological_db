@@ -1,0 +1,69 @@
+{
+  "nodes_total": 37,
+  "edges_total": 84,
+  "gene_nodes_count": 21,
+  "seed_genes_count": 5,
+  "seed_genes": [
+    "TP53",
+    "BRCA1",
+    "EGFR",
+    "AKT1",
+    "PTEN"
+  ],
+  "seed_genes_connected": [
+    "TP53",
+    "AKT1",
+    "PTEN"
+  ],
+  "seed_genes_unconnected": [
+    "BRCA1",
+    "EGFR"
+  ],
+  "introduced_neighborhood_genes_count": 16,
+  "introduced_neighborhood_genes": [
+    "TNF",
+    "PDCD4",
+    "STAT3",
+    "BCL2",
+    "CDK6",
+    "IL6",
+    "IGF2",
+    "NFKB1",
+    "NLRP3",
+    "MDM2",
+    "VEGFA",
+    "TGFB1",
+    "MMP9",
+    "MAPK3",
+    "CCND1",
+    "MYC"
+  ],
+  "rna_nodes_count": 7,
+  "rna_breakdown": {
+    "miRNA": 2,
+    "lncRNA": 4,
+    "circRNA": 1
+  },
+  "pathway_nodes_count": 9,
+  "edges_rna_to_gene_count": 33,
+  "edges_gene_to_pathway_count": 51,
+  "edges_by_evidence_category": {
+    "validated": 22,
+    "predicted": 11
+  },
+  "edges_by_rna_type": {
+    "miRNA": 14,
+    "lncRNA": 17,
+    "circRNA": 2
+  },
+  "connected_components_count": 3,
+  "connected_component_sizes": [
+    35,
+    1,
+    1
+  ],
+  "isolated_nodes": [
+    "BRCA1",
+    "EGFR"
+  ]
+}

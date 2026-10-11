@@ -1,0 +1,35 @@
+{
+  "seed_genes_excluded": [
+    "TP53",
+    "BRCA1",
+    "EGFR",
+    "AKT1",
+    "PTEN"
+  ],
+  "standard_pathways_count": 9,
+  "seed_excluded_pathways_count": 10,
+  "pathways_common_count": 5,
+  "pathways_unique_to_standard_count": 4,
+  "pathways_unique_to_seed_excluded_count": 5,
+  "common_pathway_ids": [
+    "hsa04012",
+    "hsa04115",
+    "hsa04370",
+    "hsa04630",
+    "hsa05323"
+  ],
+  "unique_to_standard_ids": [
+    "hsa04060",
+    "hsa04210",
+    "hsa04621",
+    "hsa05200"
+  ],
+  "unique_to_seed_excluded_ids": [
+    "hsa04064",
+    "hsa04620",
+    "hsa04668",
+    "hsa04931",
+    "hsa05210"
+  ],
+  "methodological_observation": "In Stage 6 of pipeline.py, interactions where target_gene is in seed_genes are filtered out, and seed genes are completely excluded from compute_gene_weights. This verifies whether enriched pathways rely exclusively on the direct seed genes or reflect broader regulatory neighborhood coordination."
+}

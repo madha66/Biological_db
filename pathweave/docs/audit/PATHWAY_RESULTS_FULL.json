@@ -1,0 +1,247 @@
+[
+  {
+    "rank": 1,
+    "pathway_id": "hsa04370",
+    "pathway_name": "VEGF signaling pathway",
+    "composite_score": 0.8492,
+    "pvalue": 1.976317707582465e-08,
+    "fdr": 3.9526354151649294e-07,
+    "odds_ratio": 48.643,
+    "overlap_count": 6,
+    "pathway_size": 67,
+    "coverage": 0.0896,
+    "evidence_strength": 0.2265,
+    "overlapping_genes": [
+      "AKT1",
+      "MAPK3",
+      "MMP9",
+      "PTEN",
+      "STAT3",
+      "VEGFA"
+    ],
+    "inflammation_tag": "tissue_damage",
+    "merged_pathways": [
+      "hsa04931",
+      "hsa04066",
+      "hsa05205",
+      "hsa04150"
+    ],
+    "merged_pathway_names": [
+      "Insulin resistance",
+      "HIF-1 signaling pathway",
+      "Proteoglycans in cancer",
+      "mTOR signaling pathway"
+    ]
+  },
+  {
+    "rank": 2,
+    "pathway_id": "hsa04115",
+    "pathway_name": "p53 signaling pathway",
+    "composite_score": 0.7999,
+    "pvalue": 7.816953359089037e-08,
+    "fdr": 7.816953359089037e-07,
+    "odds_ratio": 37.954,
+    "overlap_count": 6,
+    "pathway_size": 84,
+    "coverage": 0.0714,
+    "evidence_strength": 0.3333,
+    "overlapping_genes": [
+      "BCL2",
+      "CCND1",
+      "CDK6",
+      "MDM2",
+      "TP53",
+      "VEGFA"
+    ],
+    "inflammation_tag": "cancer",
+    "merged_pathways": [
+      "hsa05210",
+      "hsa04110"
+    ],
+    "merged_pathway_names": [
+      "Colorectal cancer",
+      "Cell cycle"
+    ]
+  },
+  {
+    "rank": 3,
+    "pathway_id": "hsa05323",
+    "pathway_name": "Rheumatoid arthritis",
+    "composite_score": 0.7203,
+    "pvalue": 2.8188459185704695e-07,
+    "fdr": 1.4094229592852347e-06,
+    "odds_ratio": 30.127,
+    "overlap_count": 6,
+    "pathway_size": 104,
+    "coverage": 0.0577,
+    "evidence_strength": 0.3328,
+    "overlapping_genes": [
+      "IL6",
+      "MMP9",
+      "NFKB1",
+      "STAT3",
+      "TNF",
+      "VEGFA"
+    ],
+    "inflammation_tag": "autoimmunity",
+    "merged_pathways": [
+      "hsa04668",
+      "hsa04064",
+      "hsa04620"
+    ],
+    "merged_pathway_names": [
+      "TNF signaling pathway",
+      "NF-kappa B signaling pathway",
+      "Toll-like receptor signaling pathway"
+    ]
+  },
+  {
+    "rank": 4,
+    "pathway_id": "hsa05200",
+    "pathway_name": "Pathways in cancer",
+    "composite_score": 0.6182,
+    "pvalue": 6.64003838678631e-07,
+    "fdr": 2.21334612892877e-06,
+    "odds_ratio": 11.752,
+    "overlap_count": 10,
+    "pathway_size": 547,
+    "coverage": 0.0183,
+    "evidence_strength": 0.5727,
+    "overlapping_genes": [
+      "AKT1",
+      "BCL2",
+      "CCND1",
+      "CDK6",
+      "MYC",
+      "NFKB1",
+      "PTEN",
+      "STAT3",
+      "TP53",
+      "VEGFA"
+    ],
+    "inflammation_tag": "cancer",
+    "merged_pathways": [
+      "hsa04151"
+    ],
+    "merged_pathway_names": [
+      "PI3K-Akt signaling pathway"
+    ]
+  },
+  {
+    "rank": 5,
+    "pathway_id": "hsa04012",
+    "pathway_name": "ErbB signaling pathway",
+    "composite_score": 0.565,
+    "pvalue": 4.33813471752973e-06,
+    "fdr": 1.0845336793824324e-05,
+    "odds_ratio": 26.552,
+    "overlap_count": 5,
+    "pathway_size": 92,
+    "coverage": 0.0543,
+    "evidence_strength": 0.1998,
+    "overlapping_genes": [
+      "AKT1",
+      "CCND1",
+      "MAPK3",
+      "MYC",
+      "STAT3"
+    ],
+    "inflammation_tag": "cancer",
+    "merged_pathways": [
+      "hsa04010"
+    ],
+    "merged_pathway_names": [
+      "MAPK signaling pathway"
+    ]
+  },
+  {
+    "rank": 6,
+    "pathway_id": "hsa04630",
+    "pathway_name": "JAK-STAT signaling pathway",
+    "composite_score": 0.4876,
+    "pvalue": 6.6282799164487e-06,
+    "fdr": 1.4729510925441555e-05,
+    "odds_ratio": 16.993,
+    "overlap_count": 6,
+    "pathway_size": 178,
+    "coverage": 0.0337,
+    "evidence_strength": 0.2666,
+    "overlapping_genes": [
+      "BCL2",
+      "CCND1",
+      "IL6",
+      "MYC",
+      "STAT3",
+      "VEGFA"
+    ],
+    "inflammation_tag": null,
+    "merged_pathways": [],
+    "merged_pathway_names": []
+  },
+  {
+    "rank": 7,
+    "pathway_id": "hsa04210",
+    "pathway_name": "Apoptosis",
+    "composite_score": 0.4491,
+    "pvalue": 4.268385284974151e-05,
+    "fdr": 6.819581859762218e-05,
+    "odds_ratio": 16.147,
+    "overlap_count": 5,
+    "pathway_size": 147,
+    "coverage": 0.034,
+    "evidence_strength": 0.32,
+    "overlapping_genes": [
+      "AKT1",
+      "BCL2",
+      "MDM2",
+      "PTEN",
+      "TP53"
+    ],
+    "inflammation_tag": "tissue_damage",
+    "merged_pathways": [],
+    "merged_pathway_names": []
+  },
+  {
+    "rank": 8,
+    "pathway_id": "hsa04621",
+    "pathway_name": "NOD-like receptor signaling pathway",
+    "composite_score": 0.0518,
+    "pvalue": 0.01585929465265193,
+    "fdr": 0.01585929465265193,
+    "odds_ratio": 6.394,
+    "overlap_count": 3,
+    "pathway_size": 193,
+    "coverage": 0.0155,
+    "evidence_strength": 0.1864,
+    "overlapping_genes": [
+      "NFKB1",
+      "NLRP3",
+      "TNF"
+    ],
+    "inflammation_tag": "infection",
+    "merged_pathways": [],
+    "merged_pathway_names": []
+  },
+  {
+    "rank": 9,
+    "pathway_id": "hsa04060",
+    "pathway_name": "Cytokine-cytokine receptor interaction",
+    "composite_score": 0.0474,
+    "pvalue": 0.009275236642100972,
+    "fdr": 0.010213311366287196,
+    "odds_ratio": 5.611,
+    "overlap_count": 4,
+    "pathway_size": 305,
+    "coverage": 0.0131,
+    "evidence_strength": 0.1803,
+    "overlapping_genes": [
+      "IL6",
+      "TGFB1",
+      "TNF",
+      "VEGFA"
+    ],
+    "inflammation_tag": "autoimmunity",
+    "merged_pathways": [],
+    "merged_pathway_names": []
+  }
+]

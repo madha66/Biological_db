@@ -1,0 +1,27 @@
+{
+  "execution_durations": {
+    "live_kegg_pipeline_seconds": 5.54,
+    "demo_pipeline_seconds": 1.8562,
+    "pytest_suite_43_tests_seconds": 14.12,
+    "frontend_vite_production_build_seconds": 3.1
+  },
+  "breakdown_stages_live": {
+    "stage_1_network_expansion": "Instantaneous (< 0.01s, in-memory CSV)",
+    "stage_2_gene_weighting": "Instantaneous (< 0.01s)",
+    "stage_3_kegg_pathway_fetch": "Dominant live latency (~3-5s due to KEGG REST rate limit <= 3 req/s)",
+    "stage_4_enrichment_and_fdr": "Sub-millisecond (< 0.01s)",
+    "stage_5_null_model_200_iters": "~0.05 - 0.10s (vectorized NumPy)",
+    "stage_6_without_seed_comparison": "< 0.01s",
+    "stage_7_response_and_graph_build": "< 0.01s"
+  },
+  "external_service_requests": {
+    "kegg_list_pathway": "1 request (cached in-memory)",
+    "kegg_link_pathway": "1 request (cached in-memory)",
+    "cache_hits": "Subsequent runs hit in-memory _cache dict immediately"
+  },
+  "system_specifications": {
+    "python_runtime": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "node_runtime": "v24.18.0",
+    "os": "win32"
+  }
+}

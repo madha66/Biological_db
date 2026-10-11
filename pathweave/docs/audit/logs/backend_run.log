@@ -1,0 +1,8 @@
+=== PathWeave Backend API Verification Log ===
+GET /health -> HTTP 200: {'status': 'ok', 'service': 'PathWeave API'}
+GET /api/organisms -> HTTP 200: [{'code': 'hsa', 'name': 'Homo sapiens', 'common_name': 'Human'}, {'code': 'mmu', 'name': 'Mus musculus', 'common_name': 'Mouse'}, {'code': 'rno', 'name': 'Rattus norvegicus', 'common_name': 'Rat'}]
+GET /api/genes/suggest?q=TP53 -> HTTP 200: [{'gene': 'TP53', 'aliases': []}]
+GET /api/demo -> HTTP 200: {'job_id': 'd22dfea0-ac7e-456d-b9e5-faad07498b64', 'message': 'Demo analysis started'}
+GET /api/jobs/d22dfea0-ac7e-456d-b9e5-faad07498b64 -> HTTP 200: status=done, percent=100
+GET /api/export/d22dfea0-ac7e-456d-b9e5-faad07498b64?format=csv -> HTTP 200, length=2351 bytes
+Backend verification completed successfully.

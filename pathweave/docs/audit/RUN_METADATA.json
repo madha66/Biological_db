@@ -1,0 +1,27 @@
+{
+  "execution_timestamp": "2026-10-11 16:08:07 UTC",
+  "environment": {
+    "operating_system": "win32",
+    "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "node_version": "v24.18.0",
+    "npm_version": "11.16.0"
+  },
+  "live_run": {
+    "job_id": "audit-live-run-tp53",
+    "mode": "Live KEGG REST API (https://rest.kegg.jp)",
+    "wall_clock_runtime_seconds": 5.54,
+    "status": "done",
+    "pathways_tested": 9,
+    "pathways_significant": 9,
+    "top_pathway": "VEGF signaling pathway"
+  },
+  "demo_run": {
+    "job_id": "audit-demo-run-tp53",
+    "mode": "Offline curated demo pathway dictionary (_DEMO_PATHWAYS['hsa'])",
+    "wall_clock_runtime_seconds": 1.8562,
+    "status": "done",
+    "pathways_tested": 10,
+    "pathways_significant": 10,
+    "top_pathway": "Pathways in cancer"
+  }
+}

@@ -1,0 +1,21 @@
+pathway_id,pathway_name,pre_merge_rank,composite_score,overlap_count,overlapping_genes,retained_post_merge,cluster_representative_id,merged_pathways_in_cluster
+hsa05200,Pathways in cancer,1,0.8964,10,AKT1;BCL2;CCND1;CDK6;MYC;NFKB1;PTEN;STAT3;TP53;VEGFA,True,hsa05200,hsa05210;hsa04151
+hsa04931,Insulin resistance,2,0.6854,6,AKT1;MAPK3;NFKB1;PTEN;STAT3;TGFB1,True,hsa04931,hsa04370
+hsa05210,Colorectal cancer,3,0.6624,6,AKT1;BCL2;CCND1;MYC;TP53;VEGFA,False,hsa05200,
+hsa04370,VEGF signaling pathway,4,0.6449,6,AKT1;MAPK3;MMP9;PTEN;STAT3;VEGFA,False,hsa04931,
+hsa04151,PI3K-Akt signaling pathway,5,0.5693,7,AKT1;BCL2;CCND1;MYC;PTEN;STAT3;VEGFA,False,hsa05200,
+hsa04012,ErbB signaling pathway,6,0.5478,5,AKT1;CCND1;MAPK3;MYC;STAT3,True,hsa04012,hsa04010
+hsa04066,HIF-1 signaling pathway,7,0.5391,5,AKT1;BCL2;MAPK3;STAT3;VEGFA,True,hsa04066,hsa05205;hsa04150
+hsa05205,Proteoglycans in cancer,8,0.5391,5,AKT1;BCL2;MMP9;STAT3;VEGFA,False,hsa04066,
+hsa04115,p53 signaling pathway,9,0.5021,6,BCL2;CCND1;CDK6;MDM2;TP53;VEGFA,True,hsa04115,hsa04110
+hsa05323,Rheumatoid arthritis,10,0.5019,6,IL6;MMP9;NFKB1;STAT3;TNF;VEGFA,True,hsa05323,hsa04668;hsa04064;hsa04620
+hsa04630,JAK-STAT signaling pathway,11,0.4143,6,BCL2;CCND1;IL6;MYC;STAT3;VEGFA,True,hsa04630,
+hsa04210,Apoptosis,12,0.3433,5,AKT1;BCL2;MDM2;PTEN;TP53,True,hsa04210,
+hsa04668,TNF signaling pathway,13,0.3319,6,BCL2;IL6;MMP9;NFKB1;TNF;VEGFA,False,hsa05323,
+hsa04150,mTOR signaling pathway,14,0.3274,4,AKT1;PTEN;STAT3;VEGFA,False,hsa04066,
+hsa04110,Cell cycle,15,0.286,4,CCND1;CDK6;MDM2;TP53,False,hsa04115,
+hsa04060,Cytokine-cytokine receptor interaction,16,0.2397,4,IL6;TGFB1;TNF;VEGFA,True,hsa04060,
+hsa04064,NF-kappa B signaling pathway,17,0.1703,5,BCL2;IL6;MMP9;NFKB1;TNF,False,hsa05323,
+hsa04010,MAPK signaling pathway,18,0.1515,4,BCL2;CCND1;MAPK3;MYC,False,hsa04012,
+hsa04621,NOD-like receptor signaling pathway,19,0.1276,3,NFKB1;NLRP3;TNF,True,hsa04621,
+hsa04620,Toll-like receptor signaling pathway,20,0.0869,4,IL6;MMP9;NFKB1;TNF,False,hsa05323,

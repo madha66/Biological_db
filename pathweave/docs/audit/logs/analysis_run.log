@@ -1,0 +1,20 @@
+=== PathWeave Analysis Pipeline Execution Log ===
+Timestamp: 2026-10-11 16:11:00 UTC
+Job ID: audit-log-run
+Starting pipeline execution...
+Completed in 5.3178 seconds.
+Status: done
+Stage: Complete
+Summary Stats:
+  Seed Genes: 5
+  Neighborhood Genes: 21
+  Total RNAs: 7
+  Pathways Tested: 9
+  Significant Pathways: 9
+  Top Pathway: VEGF signaling pathway
+Top 5 Ranked Pathways:
+  Rank 1: hsa04370 - VEGF signaling pathway (Score: 0.8492, FDR: 3.9526e-07, Overlap: 6)
+  Rank 2: hsa04115 - p53 signaling pathway (Score: 0.7999, FDR: 7.8170e-07, Overlap: 6)
+  Rank 3: hsa05323 - Rheumatoid arthritis (Score: 0.7203, FDR: 1.4094e-06, Overlap: 6)
+  Rank 4: hsa05200 - Pathways in cancer (Score: 0.6182, FDR: 2.2133e-06, Overlap: 10)
+  Rank 5: hsa04012 - ErbB signaling pathway (Score: 0.565, FDR: 1.0845e-05, Overlap: 5)

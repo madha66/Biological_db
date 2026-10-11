@@ -1,0 +1,102 @@
+{
+  "interaction_dataset": {
+    "file_name": "sample_interactions.csv",
+    "relative_path": "data\\sample_interactions.csv",
+    "format": "CSV (UTF-8, comma-delimited)",
+    "file_size_bytes": 5100,
+    "sha256": "399809b1395231ac18ae4aed4f02210f5583b6b1ce67cdd3e0bf0923c85b879b",
+    "total_rows": 110,
+    "total_columns": 5,
+    "columns": [
+      "rna_id",
+      "rna_type",
+      "target_gene",
+      "evidence",
+      "source_db"
+    ],
+    "column_descriptions": {
+      "rna_id": "Identifier of the regulatory non-coding RNA (miRBase ID, HGNC symbol for lncRNA, circRNA ID)",
+      "rna_type": "Molecular class of the regulatory RNA (miRNA, lncRNA, circRNA)",
+      "target_gene": "HGNC gene symbol of the regulated gene/mRNA target",
+      "evidence": "Confidence or validation level of the interaction (validated vs predicted)",
+      "source_db": "Curated database repository providing the interaction tuple"
+    },
+    "unique_rnas_total": 27,
+    "unique_target_genes_total": 41,
+    "rna_type_distribution": {
+      "miRNA": 63,
+      "lncRNA": 36,
+      "circRNA": 11
+    },
+    "evidence_distribution": {
+      "validated": 67,
+      "predicted": 43
+    },
+    "source_db_distribution": {
+      "miRTarBase": 43,
+      "LncRNA2Target": 36,
+      "starBase": 20,
+      "CircInteractome": 11
+    },
+    "missing_values_per_column": {
+      "rna_id": 0,
+      "rna_type": 0,
+      "target_gene": 0,
+      "evidence": 0,
+      "source_db": 0
+    },
+    "exact_duplicate_rows": 0,
+    "unique_rna_target_pairs": 110,
+    "duplicate_biological_relationships_count": 0,
+    "duplicate_biological_relationships": [],
+    "identifier_schemes": {
+      "miRNA": "miRBase mature accession IDs (e.g., hsa-miR-146a-5p)",
+      "lncRNA": "HGNC gene symbols (e.g., HOTAIR, MALAT1, H19)",
+      "circRNA": "circBase identifiers (e.g., hsa_circ_0001649) and alias symbols (ciRS-7)",
+      "target_gene": "Standard uppercase HGNC human gene symbols (e.g., TNF, TP53, PTEN)"
+    },
+    "provenance_and_metadata": {
+      "commit_hash": "a6a439b861f86cfb4722e9a7e1d6a009413e6675",
+      "commit_date": "2026-10-04T21:46:33+05:30",
+      "collection_method": "Hand-curated prototype sample dataset bundled for local demonstration and testing",
+      "database_releases": "Unspecified in repository (upstream versions for miRTarBase, starBase, LncRNA2Target, CircInteractome not tracked)",
+      "organism_annotation": "Implicitly human (Homo sapiens / hsa) via hsa- prefixes and HGNC symbols, no organism column present"
+    }
+  },
+  "inflammation_tags_dataset": {
+    "file_name": "inflammation_tags.json",
+    "relative_path": "data\\inflammation_tags.json",
+    "format": "JSON",
+    "file_size_bytes": 3344,
+    "sha256": "fb6b6fb598bf9624497f02db87a5719e1910d06c2cc3b4cee1ba988cbf2f5e5b",
+    "categories": [
+      "infection",
+      "autoimmunity",
+      "metabolic",
+      "cancer",
+      "tissue_damage"
+    ],
+    "pathway_ids_per_category": {
+      "infection": 30,
+      "autoimmunity": 10,
+      "metabolic": 15,
+      "cancer": 23,
+      "tissue_damage": 18
+    },
+    "keywords_per_category": {
+      "infection": 17,
+      "autoimmunity": 17,
+      "metabolic": 16,
+      "cancer": 21,
+      "tissue_damage": 24
+    },
+    "total_pathway_id_mappings": 96,
+    "total_keywords": 95,
+    "overlapping_pathways_across_categories": [
+      "hsa04940"
+    ],
+    "overlapping_keywords_across_categories": [
+      "angiogenesis"
+    ]
+  }
+}

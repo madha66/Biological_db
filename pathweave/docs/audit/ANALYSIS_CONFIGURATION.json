@@ -1,0 +1,40 @@
+{
+  "execution_target": "PathWeave Analysis Pipeline (backend/app/api/pipeline.py)",
+  "seed_genes_submitted": [
+    "TP53",
+    "BRCA1",
+    "EGFR",
+    "AKT1",
+    "PTEN"
+  ],
+  "organism_code": "hsa",
+  "organism_name": "Homo sapiens (Human)",
+  "configuration_parameters": {
+    "include_rna_types": [
+      "miRNA",
+      "lncRNA",
+      "circRNA"
+    ],
+    "evidence_weights": {
+      "validated": 1.0,
+      "predicted": 0.4
+    },
+    "min_overlap": 2,
+    "null_iterations": 200,
+    "fdr_threshold": 0.05,
+    "composite_weights": {
+      "fdr": 0.4,
+      "odds_ratio": 0.2,
+      "coverage": 0.2,
+      "evidence_strength": 0.2
+    },
+    "jaccard_threshold": 0.5,
+    "random_seed": 42
+  },
+  "background_universe_size": {
+    "hsa": 7500,
+    "mmu": 6800,
+    "rno": 5900,
+    "active_value": 7500
+  }
+}

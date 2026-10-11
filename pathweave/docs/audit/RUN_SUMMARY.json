@@ -1,0 +1,29 @@
+{
+  "primary_audited_run": "LIVE (with DEMO comparison)",
+  "seed_genes": [
+    "TP53",
+    "BRCA1",
+    "EGFR",
+    "AKT1",
+    "PTEN"
+  ],
+  "n_seed_genes": 5,
+  "n_neighborhood_genes": 21,
+  "n_mirna": 2,
+  "n_lncrna": 4,
+  "n_circrna": 1,
+  "n_total_rnas": 7,
+  "live_metrics": {
+    "n_pathways_tested": 9,
+    "n_pathways_significant": 9,
+    "top_pathway": "VEGF signaling pathway",
+    "runtime_seconds": 5.54
+  },
+  "demo_metrics": {
+    "n_pathways_tested": 10,
+    "n_pathways_significant": 10,
+    "top_pathway": "Pathways in cancer",
+    "runtime_seconds": 1.86
+  },
+  "plain_summary": "The RNA neighborhood of **TP53, BRCA1, EGFR** spans **21 genes** connected through **7 regulatory RNAs**. Pathway enrichment highlights **VEGF signaling pathway** and **p53 signaling pathway** and **Rheumatoid arthritis** as the most strongly associated pathways. The dominant inflammation signal is **cancer-associated**, with 9 pathways reaching FDR significance."
+}

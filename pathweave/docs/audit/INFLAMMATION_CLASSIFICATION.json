@@ -1,0 +1,174 @@
+{
+  "categories_available": [
+    "infection",
+    "autoimmunity",
+    "metabolic",
+    "cancer",
+    "tissue_damage"
+  ],
+  "rule_precedence": "Dictionary key order (infection -> autoimmunity -> metabolic -> cancer -> tissue_damage), checking pathway_ids first, then keywords.",
+  "fdr_threshold_used_in_summarise_inflammation": 0.05,
+  "is_hardcoded": true,
+  "total_pathways_evaluated": 9,
+  "total_significant_pathways": 9,
+  "assigned_category_counts": {
+    "tissue_damage": 2,
+    "cancer": 3,
+    "autoimmunity": 2,
+    "unclassified": 1,
+    "infection": 1
+  },
+  "multi_category_candidates_count": 2,
+  "multi_category_candidates": [
+    {
+      "pathway_id": "hsa04115",
+      "pathway_name": "p53 signaling pathway",
+      "assigned_category": "cancer",
+      "all_matching_categories": [
+        "cancer",
+        "tissue_damage"
+      ]
+    },
+    {
+      "pathway_id": "hsa04012",
+      "pathway_name": "ErbB signaling pathway",
+      "assigned_category": "cancer",
+      "all_matching_categories": [
+        "cancer",
+        "tissue_damage"
+      ]
+    }
+  ],
+  "detailed_classifications": [
+    {
+      "pathway_id": "hsa04370",
+      "pathway_name": "VEGF signaling pathway",
+      "assigned_category": "tissue_damage",
+      "fdr": 3.9526354151649294e-07,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "tissue_damage",
+          "matched_by_id": true,
+          "matched_by_keyword": true
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa04115",
+      "pathway_name": "p53 signaling pathway",
+      "assigned_category": "cancer",
+      "fdr": 7.816953359089037e-07,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "cancer",
+          "matched_by_id": false,
+          "matched_by_keyword": true
+        },
+        {
+          "category": "tissue_damage",
+          "matched_by_id": true,
+          "matched_by_keyword": false
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa05323",
+      "pathway_name": "Rheumatoid arthritis",
+      "assigned_category": "autoimmunity",
+      "fdr": 1.4094229592852347e-06,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "autoimmunity",
+          "matched_by_id": true,
+          "matched_by_keyword": true
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa05200",
+      "pathway_name": "Pathways in cancer",
+      "assigned_category": "cancer",
+      "fdr": 2.21334612892877e-06,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "cancer",
+          "matched_by_id": true,
+          "matched_by_keyword": true
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa04012",
+      "pathway_name": "ErbB signaling pathway",
+      "assigned_category": "cancer",
+      "fdr": 1.0845336793824324e-05,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "cancer",
+          "matched_by_id": false,
+          "matched_by_keyword": true
+        },
+        {
+          "category": "tissue_damage",
+          "matched_by_id": true,
+          "matched_by_keyword": false
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa04630",
+      "pathway_name": "JAK-STAT signaling pathway",
+      "assigned_category": "unclassified",
+      "fdr": 1.4729510925441555e-05,
+      "is_significant_fdr05": true,
+      "all_matches": []
+    },
+    {
+      "pathway_id": "hsa04210",
+      "pathway_name": "Apoptosis",
+      "assigned_category": "tissue_damage",
+      "fdr": 6.819581859762218e-05,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "tissue_damage",
+          "matched_by_id": true,
+          "matched_by_keyword": true
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa04621",
+      "pathway_name": "NOD-like receptor signaling pathway",
+      "assigned_category": "infection",
+      "fdr": 0.01585929465265193,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "infection",
+          "matched_by_id": true,
+          "matched_by_keyword": true
+        }
+      ]
+    },
+    {
+      "pathway_id": "hsa04060",
+      "pathway_name": "Cytokine-cytokine receptor interaction",
+      "assigned_category": "autoimmunity",
+      "fdr": 0.010213311366287196,
+      "is_significant_fdr05": true,
+      "all_matches": [
+        {
+          "category": "autoimmunity",
+          "matched_by_id": true,
+          "matched_by_keyword": false
+        }
+      ]
+    }
+  ]
+}
